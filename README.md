@@ -12,41 +12,36 @@
 
 ---
 
-Knightro is a basic chess engine that communicates via the
+Knightro is a simplistic chess engine that communicates via the
 [Universal Chess Interface](https://backscattering.de/chess/uci/) (UCI) protocol.
 It pairs a classic alpha-beta search with custom heuristics and optimization techniques.
 is compatible with any UCI GUI or [lichess-bot](https://github.com/lichess-bot-devs/lichess-bot).
 
 ## Features
 
-### Alpha-Beta Negamax Search
+### Search
 
 | Technique | Details |
 |---|---|
-| **Iterative deepening** | Soft limit (50 % of budget) prevents starting hopeless iterations |
-| **Alpha-beta negamax** | Fail-soft framework with principal-variation tracking |
-| **Transposition table** | Zobrist-keyed, depth-preferred replacement; used for move ordering and score cutoffs |
-| **Null-move pruning** | Reduction R = 2 (depth < 6) or R = 3; skipped when in check or lacking major pieces |
-| **Killer-move heuristic** | Two slots per ply for quiet-move ordering |
-| **MVV-LVA ordering** | Most Valuable Victim – Least Valuable Attacker for capture sorting |
-| **Check extensions** | Positions in check are searched one ply deeper |
+| **Alpha-beta negamax** | Fail-soft framework with PV tracking |
+| **Iterative deepening** | Adjust depth on the fly to maximize search depth per movetime |
+| **Transposition table** | Zobrist-keyed cache used for alpha-beta cutoff and move ordering |
 | **Quiescence search** | Stand-pat pruning, promotion captures, and in-check evasions with mate detection |
 
 ### Evaluation Heuristics
 
-All scores are in **centipawns** from White's perspective; the side-to-move
-wrapper flips the sign for a consistent negamax framework.
+All scores are in **centipawns** from White's perspective.
 
-| Term | Description |
+| Heuristic | Description |
 |---|---|
-| **Material** | Standard piece values (P=100, N=320, B=330, R=500, Q=900) |
+| **Material** | Standard piece values |
 | **Piece-square tables** | Per-square positional bonuses for every piece type |
 | **Bishop pair** | +50 cp for holding both bishops |
 | **Rook activity** | Bonus for rooks on open / semi-open files |
 | **Passed pawns** | Exponential bonus for advanced passers |
-| **King safety** | Pawn-shield bonus on the back ranks |
-| **King centralisation** | Endgame bonus (activates when ≤ 12 pieces remain) |
-| **Tempo** | Small bonus (+10 cp) for the side to move |
+| **King safety** | Pawn shield bonus on the back ranks |
+| **King centrality** | King is rewarded for centering during endgame |
+| **Tempo** | Standard small bonus for side to move |
 
 ## Project Structure
 
