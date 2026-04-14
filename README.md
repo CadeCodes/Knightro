@@ -88,7 +88,3 @@ Knightro allocates **1 ⁄ 30** of remaining time plus increment per
 move (if applicable), with a 50 ms safety margin.  When a `movetime` argument is passed via UCI, it is
 used directly.  Iterative deepening stops early if 50 % of the budget is
 already spent before the next iteration would begin.
-
-## License
-
-MIT © **CadeCodes**
