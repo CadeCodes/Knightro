@@ -26,7 +26,7 @@ is compatible with any UCI GUI or [lichess-bot](https://github.com/lichess-bot-d
 | **Alpha-beta negamax** | Fail-soft framework with PV tracking |
 | **Iterative deepening** | Adjust depth on the fly to maximize search depth per movetime |
 | **Transposition table** | Zobrist-keyed cache used for alpha-beta cutoff and move ordering |
-| **Quiescence search** | Stand-pat pruning, promotion captures, and in-check evasions with mate detection |
+| **Quiescence search** | Stand-pat pruning, promotions, captures, and in-check evasions with mate detection |
 
 ### Evaluation Heuristics
 
