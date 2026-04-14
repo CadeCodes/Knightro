@@ -1,6 +1,6 @@
 <div align="center">
 
-# ♞ Knightro
+# Knightro
 
 **A UCI chess engine written in Python**
 
