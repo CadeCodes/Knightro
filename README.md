@@ -12,14 +12,14 @@
 
 ---
 
-Knightro is a from-scratch chess engine that communicates over the
+Knightro is a basic chess engine that communicates via the
 [Universal Chess Interface](https://backscattering.de/chess/uci/) (UCI) protocol.
-It pairs a classic alpha-beta search with hand-tuned evaluation heuristics and
+It pairs a classic alpha-beta search with custom heuristics and optimization techniques.
 is compatible with any UCI GUI or [lichess-bot](https://github.com/lichess-bot-devs/lichess-bot).
 
 ## Features
 
-### Search
+### Alpha-Beta Negamax Search
 
 | Technique | Details |
 |---|---|
@@ -32,7 +32,7 @@ is compatible with any UCI GUI or [lichess-bot](https://github.com/lichess-bot-d
 | **Check extensions** | Positions in check are searched one ply deeper |
 | **Quiescence search** | Stand-pat pruning, promotion captures, and in-check evasions with mate detection |
 
-### Evaluation
+### Evaluation Heuristics
 
 All scores are in **centipawns** from White's perspective; the side-to-move
 wrapper flips the sign for a consistent negamax framework.
@@ -77,22 +77,20 @@ python knightro.py
 ```
 
 Knightro reads UCI commands from `stdin` and writes responses to `stdout`.
-Point any UCI-compatible GUI (Arena, CuteChess, etc.) or lichess-bot at the
-script and it will handle the rest.
+Some GUIs will work with the python script directly, but some may require ```win_wrapper.bat``` to be used as the executable argument.
 
 ## UCI Options
 
-| Option | Type | Default | Range | Description |
-|---|---|---|---|---|
-| `Hash` | spin | 16 | 1 – 65 536 | Transposition table size in MB |
-| `Threads` | spin | 1 | 1 – 512 | *(reserved for future use)* |
-| `Move Overhead` | spin | 100 | 0 – 5 000 | Network/GUI latency buffer (ms) |
-| `UCI_ShowWDL` | check | false | — | Show win/draw/loss statistics |
+| Option | Default | Range | Description |
+|---|---|---|---|
+| `Hash` | 16 | 1 – 65,536 | Transposition table size in MB |
+| `Threads` | 1 | 1 – 512 | Not used currently |
+| `Move Overhead` | 100 | 0 – 5 000 | Network/GUI latency buffer (ms) |
 
 ## Time Management
 
-Knightro allocates **1 ⁄ 30** of remaining time plus the full increment per
-move, with a 50 ms safety margin.  When a `movetime` value is provided it is
+Knightro allocates **1 ⁄ 30** of remaining time plus increment per
+move (if applicable), with a 50 ms safety margin.  When a `movetime` argument is passed via UCI, it is
 used directly.  Iterative deepening stops early if 50 % of the budget is
 already spent before the next iteration would begin.
 
